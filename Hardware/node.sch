@@ -8492,6 +8492,22 @@ grid 2.54 mm</description>
 <label x="43.18" y="35.56" size="1.778" layer="95"/>
 <pinref part="J3" gate="G$1" pin="2"/>
 </segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="VCC"/>
+<pinref part="P+1" gate="G$1" pin="3.3V"/>
+<wire x1="238.76" y1="129.54" x2="233.68" y2="129.54" width="0.1524" layer="91"/>
+<label x="233.68" y="129.54" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="M1" gate="G$1" pin="V+"/>
+<pinref part="P+2" gate="G$1" pin="3.3V"/>
+<wire x1="220.98" y1="165.1" x2="231.14" y2="165.1" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="M2" gate="G$1" pin="V+"/>
+<pinref part="P+5" gate="G$1" pin="3.3V"/>
+<wire x1="223.52" y1="149.86" x2="231.14" y2="149.86" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="D9" class="0">
 <segment>
@@ -8564,10 +8580,17 @@ grid 2.54 mm</description>
 </net>
 <net name="D2" class="0">
 <segment>
-<wire x1="114.3" y1="124.46" x2="142.24" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="124.46" x2="132.08" y2="124.46" width="0.1524" layer="91"/>
 <label x="116.84" y="124.46" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PD1(SDA)"/>
-<pinref part="J4" gate="J$1" pin="1"/>
+</segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="/RE"/>
+<pinref part="U1" gate="G$1" pin="DE"/>
+<wire x1="208.28" y1="127" x2="208.28" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="208.28" y1="124.46" x2="203.2" y2="124.46" width="0.1524" layer="91"/>
+<junction x="208.28" y="124.46"/>
+<label x="203.2" y="124.46" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D3" class="0">
@@ -8617,17 +8640,9 @@ grid 2.54 mm</description>
 <pinref part="ATMEGA" gate="G$1" pin="PB6(ADC13)"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="/RE"/>
-<pinref part="U1" gate="G$1" pin="DE"/>
-<wire x1="208.28" y1="127" x2="208.28" y2="124.46" width="0.1524" layer="91"/>
-<wire x1="208.28" y1="124.46" x2="203.2" y2="124.46" width="0.1524" layer="91"/>
-<junction x="208.28" y="124.46"/>
-<label x="203.2" y="124.46" size="1.778" layer="95"/>
-</segment>
-<segment>
-<wire x1="180.34" y1="81.28" x2="185.42" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="R13" gate="G$1" pin="2"/>
-<label x="182.88" y="83.82" size="1.778" layer="95" rot="R180"/>
+<pinref part="J4" gate="J$1" pin="1"/>
+<wire x1="142.24" y1="124.46" x2="137.16" y2="124.46" width="0.1524" layer="91"/>
+<label x="137.16" y="124.46" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -8714,6 +8729,11 @@ grid 2.54 mm</description>
 <label x="116.84" y="99.06" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PD6(ADC9)"/>
 </segment>
+<segment>
+<wire x1="180.34" y1="81.28" x2="185.42" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="R13" gate="G$1" pin="2"/>
+<label x="182.88" y="83.82" size="1.778" layer="95" rot="R180"/>
+</segment>
 </net>
 <net name="D13" class="0">
 <segment>
@@ -8766,23 +8786,6 @@ grid 2.54 mm</description>
 <wire x1="193.04" y1="99.06" x2="193.04" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="F1" gate="G$1" pin="1"/>
 <wire x1="193.04" y1="93.98" x2="210.82" y2="93.98" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="3.3V" class="0">
-<segment>
-<pinref part="U1" gate="G$1" pin="VCC"/>
-<pinref part="P+1" gate="G$1" pin="3.3V"/>
-<wire x1="238.76" y1="129.54" x2="233.68" y2="129.54" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="M1" gate="G$1" pin="V+"/>
-<pinref part="P+2" gate="G$1" pin="3.3V"/>
-<wire x1="220.98" y1="165.1" x2="231.14" y2="165.1" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="M2" gate="G$1" pin="V+"/>
-<pinref part="P+5" gate="G$1" pin="3.3V"/>
-<wire x1="223.52" y1="149.86" x2="231.14" y2="149.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$3" class="0">

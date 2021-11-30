@@ -1,0 +1,22 @@
+0,	RX,      
+1,	TX,
+2,	,       ENABLE 485
+3,	PWM,    USER 2
+4,	A6,     USER 3
+5,	PWM,    USER 4
+6,	PWM A7, USER 5
+7,	,       USER 6
+8,	A8,     SERVO 1
+9,	PWM A9, SERVO 2
+10,	PWM,    USER 1
+11,	PWM,    MOSFET 1
+12,	A10, 
+13,	PWM,    MOSFET 2
+14,	MISO,   MISO
+15,	CLOCK,  CLOCK
+16,	MOSI,   MOSI
+18,	A0,      
+19,	A1,      
+20,	A2,
+21,	A3,
+
