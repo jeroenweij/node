@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -7959,8 +7959,8 @@ grid 2.54 mm</description>
 <instance part="GND8" gate="1" x="38.1" y="149.86" smashed="yes">
 <attribute name="VALUE" x="35.56" y="147.32" size="1.778" layer="96"/>
 </instance>
-<instance part="GND12" gate="1" x="43.18" y="27.94" smashed="yes">
-<attribute name="VALUE" x="40.64" y="25.4" size="1.778" layer="96"/>
+<instance part="GND12" gate="1" x="48.26" y="35.56" smashed="yes" rot="R90">
+<attribute name="VALUE" x="50.8" y="33.02" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R11" gate="G$1" x="203.2" y="106.68" smashed="yes" rot="R180">
 <attribute name="NAME" x="199.136" y="108.458" size="1.778" layer="95"/>
@@ -8078,13 +8078,13 @@ grid 2.54 mm</description>
 <instance part="GND13" gate="1" x="228.6" y="170.18" smashed="yes" rot="R180">
 <attribute name="VALUE" x="231.14" y="172.72" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="J4" gate="J$1" x="149.86" y="121.92" smashed="yes" rot="R180">
-<attribute name="VALUE" x="152.4" y="129.286" size="1.778" layer="96" font="vector" rot="R180"/>
-<attribute name="NAME" x="152.4" y="116.332" size="1.778" layer="95" font="vector" rot="R180"/>
+<instance part="J4" gate="J$1" x="165.1" y="129.54" smashed="yes" rot="R180">
+<attribute name="VALUE" x="167.64" y="136.906" size="1.778" layer="96" font="vector" rot="R180"/>
+<attribute name="NAME" x="167.64" y="123.952" size="1.778" layer="95" font="vector" rot="R180"/>
 </instance>
-<instance part="J5" gate="J$1" x="162.56" y="114.3" smashed="yes" rot="R180">
-<attribute name="VALUE" x="165.1" y="121.666" size="1.778" layer="96" font="vector" rot="R180"/>
-<attribute name="NAME" x="165.1" y="108.712" size="1.778" layer="95" font="vector" rot="R180"/>
+<instance part="J5" gate="J$1" x="149.86" y="106.68" smashed="yes" rot="R180">
+<attribute name="VALUE" x="152.4" y="114.046" size="1.778" layer="96" font="vector" rot="R180"/>
+<attribute name="NAME" x="152.4" y="101.092" size="1.778" layer="95" font="vector" rot="R180"/>
 </instance>
 <instance part="Q3" gate="G$1" x="30.48" y="88.9" smashed="yes">
 <attribute name="NAME" x="35.56" y="91.44" size="1.778" layer="95"/>
@@ -8236,11 +8236,6 @@ grid 2.54 mm</description>
 <pinref part="RESET" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="GND12" gate="1" pin="GND"/>
-<wire x1="43.18" y1="30.48" x2="43.18" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="J3" gate="G$1" pin="1"/>
-</segment>
-<segment>
 <wire x1="190.5" y1="106.68" x2="190.5" y2="93.98" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 <pinref part="J1" gate="G$1" pin="GND"/>
@@ -8306,6 +8301,11 @@ grid 2.54 mm</description>
 <wire x1="38.1" y1="58.42" x2="33.02" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="58.42" x2="38.1" y2="58.42" width="0.1524" layer="91"/>
 <pinref part="J6" gate="G$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="2"/>
+<pinref part="GND12" gate="1" pin="GND"/>
+<wire x1="45.72" y1="35.56" x2="43.18" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="AREF" class="0">
@@ -8488,11 +8488,6 @@ grid 2.54 mm</description>
 <label x="228.6" y="93.98" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="43.18" y1="35.56" x2="48.26" y2="35.56" width="0.1524" layer="91"/>
-<label x="43.18" y="35.56" size="1.778" layer="95"/>
-<pinref part="J3" gate="G$1" pin="2"/>
-</segment>
-<segment>
 <pinref part="U1" gate="G$1" pin="VCC"/>
 <pinref part="P+1" gate="G$1" pin="3.3V"/>
 <wire x1="238.76" y1="129.54" x2="233.68" y2="129.54" width="0.1524" layer="91"/>
@@ -8508,29 +8503,25 @@ grid 2.54 mm</description>
 <pinref part="P+5" gate="G$1" pin="3.3V"/>
 <wire x1="223.52" y1="149.86" x2="231.14" y2="149.86" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="1"/>
+<wire x1="43.18" y1="33.02" x2="48.26" y2="33.02" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="D9" class="0">
 <segment>
-<wire x1="114.3" y1="106.68" x2="121.92" y2="106.68" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="106.68" x2="142.24" y2="106.68" width="0.1524" layer="91"/>
 <label x="116.84" y="106.68" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PB5(ADC12)"/>
-</segment>
-<segment>
-<pinref part="M2" gate="G$1" pin="SIG"/>
-<wire x1="231.14" y1="147.32" x2="226.06" y2="147.32" width="0.1524" layer="91"/>
-<label x="226.06" y="147.32" size="1.778" layer="95"/>
+<pinref part="J5" gate="J$1" pin="2"/>
 </segment>
 </net>
 <net name="D8" class="0">
 <segment>
-<wire x1="114.3" y1="109.22" x2="121.92" y2="109.22" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="109.22" x2="142.24" y2="109.22" width="0.1524" layer="91"/>
 <label x="116.84" y="109.22" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PB4(ADC11)"/>
-</segment>
-<segment>
-<pinref part="M1" gate="G$1" pin="SIG"/>
-<wire x1="231.14" y1="162.56" x2="226.06" y2="162.56" width="0.1524" layer="91"/>
-<label x="226.06" y="162.56" size="1.778" layer="95"/>
+<pinref part="J5" gate="J$1" pin="1"/>
 </segment>
 </net>
 <net name="A5" class="0">
@@ -8552,6 +8543,11 @@ grid 2.54 mm</description>
 <wire x1="114.3" y1="144.78" x2="121.92" y2="144.78" width="0.1524" layer="91"/>
 <label x="116.84" y="144.78" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PF4(ADC4)"/>
+</segment>
+<segment>
+<wire x1="180.34" y1="81.28" x2="185.42" y2="81.28" width="0.1524" layer="91"/>
+<pinref part="R13" gate="G$1" pin="2"/>
+<label x="182.88" y="83.82" size="1.778" layer="95" rot="R180"/>
 </segment>
 </net>
 <net name="A2" class="0">
@@ -8580,7 +8576,7 @@ grid 2.54 mm</description>
 </net>
 <net name="D2" class="0">
 <segment>
-<wire x1="114.3" y1="124.46" x2="132.08" y2="124.46" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="124.46" x2="121.92" y2="124.46" width="0.1524" layer="91"/>
 <label x="116.84" y="124.46" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PD1(SDA)"/>
 </segment>
@@ -8595,54 +8591,65 @@ grid 2.54 mm</description>
 </net>
 <net name="D3" class="0">
 <segment>
-<wire x1="114.3" y1="121.92" x2="142.24" y2="121.92" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="121.92" x2="121.92" y2="121.92" width="0.1524" layer="91"/>
 <label x="116.84" y="121.92" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PD0(SCL)"/>
-<pinref part="J4" gate="J$1" pin="2"/>
 </segment>
 </net>
 <net name="D4" class="0">
 <segment>
-<wire x1="114.3" y1="119.38" x2="142.24" y2="119.38" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="119.38" x2="121.92" y2="119.38" width="0.1524" layer="91"/>
 <label x="116.84" y="119.38" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PD4(ADC8)"/>
-<pinref part="J4" gate="J$1" pin="3"/>
+</segment>
+<segment>
+<pinref part="J4" gate="J$1" pin="1"/>
+<wire x1="157.48" y1="132.08" x2="149.86" y2="132.08" width="0.1524" layer="91"/>
+<label x="149.86" y="132.08" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D5" class="0">
 <segment>
-<wire x1="114.3" y1="116.84" x2="154.94" y2="116.84" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="116.84" x2="121.92" y2="116.84" width="0.1524" layer="91"/>
 <label x="116.84" y="116.84" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PC6"/>
-<pinref part="J5" gate="J$1" pin="1"/>
+</segment>
+<segment>
+<pinref part="M1" gate="G$1" pin="SIG"/>
+<wire x1="231.14" y1="162.56" x2="226.06" y2="162.56" width="0.1524" layer="91"/>
+<label x="226.06" y="162.56" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D6" class="0">
 <segment>
-<wire x1="114.3" y1="114.3" x2="154.94" y2="114.3" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="114.3" x2="121.92" y2="114.3" width="0.1524" layer="91"/>
 <label x="116.84" y="114.3" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PD7(ADC10)"/>
-<pinref part="J5" gate="J$1" pin="2"/>
+</segment>
+<segment>
+<pinref part="J4" gate="J$1" pin="3"/>
+<wire x1="157.48" y1="127" x2="149.86" y2="127" width="0.1524" layer="91"/>
+<label x="149.86" y="127" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D7" class="0">
 <segment>
-<wire x1="114.3" y1="111.76" x2="154.94" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="111.76" x2="121.92" y2="111.76" width="0.1524" layer="91"/>
 <label x="116.84" y="111.76" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PE6"/>
-<pinref part="J5" gate="J$1" pin="3"/>
+</segment>
+<segment>
+<pinref part="M2" gate="G$1" pin="SIG"/>
+<wire x1="231.14" y1="147.32" x2="226.06" y2="147.32" width="0.1524" layer="91"/>
+<label x="226.06" y="147.32" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D10" class="0">
 <segment>
-<wire x1="114.3" y1="104.14" x2="121.92" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="114.3" y1="104.14" x2="142.24" y2="104.14" width="0.1524" layer="91"/>
 <label x="116.84" y="104.14" size="1.778" layer="95"/>
 <pinref part="ATMEGA" gate="G$1" pin="PB6(ADC13)"/>
-</segment>
-<segment>
-<pinref part="J4" gate="J$1" pin="1"/>
-<wire x1="142.24" y1="124.46" x2="137.16" y2="124.46" width="0.1524" layer="91"/>
-<label x="137.16" y="124.46" size="1.778" layer="95"/>
+<pinref part="J5" gate="J$1" pin="3"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -8730,9 +8737,9 @@ grid 2.54 mm</description>
 <pinref part="ATMEGA" gate="G$1" pin="PD6(ADC9)"/>
 </segment>
 <segment>
-<wire x1="180.34" y1="81.28" x2="185.42" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="R13" gate="G$1" pin="2"/>
-<label x="182.88" y="83.82" size="1.778" layer="95" rot="R180"/>
+<pinref part="J4" gate="J$1" pin="2"/>
+<wire x1="157.48" y1="129.54" x2="149.86" y2="129.54" width="0.1524" layer="91"/>
+<label x="149.86" y="129.54" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="D13" class="0">
@@ -8745,13 +8752,6 @@ grid 2.54 mm</description>
 <pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="17.78" y1="60.96" x2="10.16" y2="60.96" width="0.1524" layer="91"/>
 <label x="10.16" y="60.96" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="D14" class="0">
-<segment>
-<wire x1="114.3" y1="93.98" x2="124.46" y2="93.98" width="0.1524" layer="91"/>
-<label x="116.84" y="93.98" size="1.778" layer="95"/>
-<pinref part="ATMEGA" gate="G$1" pin="PB0(SS)"/>
 </segment>
 </net>
 <net name="N$6" class="0">
