@@ -1,0 +1,3 @@
+[submodule "Software/tools"]
+	path = Software/tools
+	url = git@github.com:jeroenweij/tools.git
