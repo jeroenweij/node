@@ -6,10 +6,13 @@ add_library(NodeLib
     NodeLib/NodeMaster.h
     NodeLib/NodeMaster.cpp
     NodeLib/IVariableHandler.h
+    NodeLib/EPinMode.h
+    NodeLib/EOperation.h
 )
 
 target_include_directories(NodeLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_link_libraries(NodeLib
     arduinocore
+    libtools
     )

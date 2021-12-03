@@ -13,6 +13,8 @@ add_executable(${CMAKE_PROJECT_NAME}
     src/Node.cpp
     src/Channel.h
     src/Channel.cpp
+    src/ServoChannel.h
+    src/ServoChannel.cpp
     src/ChannelManager.h
     src/ChannelManager.cpp
 )
@@ -23,7 +25,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     avrlib
     pins
     NodeLib
-    arduinoServo
+    libservo
 )
 
 add_dependencies(${CMAKE_PROJECT_NAME} generate_pins)

@@ -2,20 +2,139 @@
 * Created by J. Weij
 *************************************************************/
 
-#include "Channel.h"
 #include "Arduino.h"
+#include <tools/Logger.h>
 
-Channel::Channel(const int pin, const ChannelType type, const bool pwm) :
+#include "Channel.h"
+
+using NodeLib::Message;
+using NodeLib::Node;
+using NodeLib::Operation;
+using NodeLib::PinMode;
+
+Channel::Channel(const uint8_t channel, const int pin, const ChannelType type, const bool pwm) :
     pin(pin),
+    channel(channel),
     type(type),
     pwm(pwm),
     mode(PinMode::DIGITAL_IN),
-    output(0)
-{ }
-
-void Channel::Init() const
+    currentValue(0),
+    node(nullptr),
+    forceUpdate(false)
 {
-    switch (mode) {
+}
+
+void Channel::HandleCommand(const NodeLib::Message& m)
+{
+    switch (m.id.operation)
+    {
+        case Operation::GET:
+        {
+            GetValue(m);
+            break;
+        }
+        case Operation::SET:
+        {
+            SetValue(m);
+            break;
+        }
+        case Operation::SETPWM:
+        {
+            SetValuePwm(m);
+            break;
+        }
+        case Operation::SETMODE:
+        {
+            SetMode(m, static_cast<PinMode>(m.value));
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void Channel::SetMode(const Message& m, const PinMode newMode)
+{
+    LOG_INFO("Set mode, channel: " << m.id.channel << ", Mode: " << mode << "->" << newMode);
+    if (mode == newMode)
+    {
+        return;
+    }
+
+    if (mode == PinMode::SERVO)
+    {
+        ServoDetach();
+    }
+
+    currentValue = 0;
+    switch (newMode)
+    {
+        case PinMode::ANALOG_IN:
+            if (type != ChannelType::ANALOG)
+            {
+                QueueMessage(Operation::ERROR);
+            }
+            else
+            {
+                mode = newMode;
+                pinMode(pin, INPUT);
+                forceUpdate = true;
+            }
+            break;
+        case PinMode::DIGITAL_IN:
+            if (type == ChannelType::MOSFET)
+            {
+                QueueMessage(Operation::ERROR);
+            }
+            else
+            {
+                mode = newMode;
+                pinMode(pin, INPUT_PULLUP);
+                forceUpdate = true;
+            }
+            break;
+        case PinMode::DIGITAL_OUT:
+        {
+            mode = newMode;
+            pinMode(pin, OUTPUT);
+            digitalWrite(pin, currentValue);
+            break;
+        }
+        case PinMode::SERVO:
+            if (type != ChannelType::SERVO)
+            {
+                QueueMessage(Operation::ERROR);
+            }
+            else
+            {
+                mode = newMode;
+                pinMode(pin, OUTPUT);
+                ServoAttach();
+            }
+            break;
+    }
+}
+
+void Channel::QueueMessage(const Operation operation)
+{
+    QueueMessage(operation, 0);
+}
+
+void Channel::QueueMessage(const NodeLib::Operation operation, const Value value)
+{
+    if (node == nullptr)
+    {
+        return;
+    }
+    node->QueueMessage({ node->GetId(), channel, operation, value });
+}
+
+void Channel::Init(Node& node)
+{
+    this->node = &node;
+
+    switch (mode)
+    {
         case PinMode::DIGITAL_IN:
         {
             pinMode(pin, INPUT_PULLUP);
@@ -24,7 +143,7 @@ void Channel::Init() const
         case PinMode::DIGITAL_OUT:
         {
             pinMode(pin, OUTPUT);
-            digitalWrite(pin, output);
+            digitalWrite(pin, currentValue);
             break;
         }
         case PinMode::ANALOG_IN:
@@ -37,4 +156,120 @@ void Channel::Init() const
             break;
         }
     }
+}
+
+void Channel::Loop()
+{
+    switch (mode)
+    {
+        case PinMode::ANALOG_IN:
+        {
+            Value value = analogRead(pin);
+            if (value != currentValue || forceUpdate)
+            {
+                currentValue = value;
+                QueueMessage(Operation::VALUE, value);
+            }
+            break;
+        }
+        case PinMode::DIGITAL_IN:
+        {
+            Value value = (digitalRead(pin) == LOW) ? 1 : 0;
+            if (value != currentValue || forceUpdate)
+            {
+                currentValue = value;
+                QueueMessage(Operation::VALUE, value);
+            }
+            break;
+        }
+        default:
+            // Do nothing
+            break;
+    }
+    forceUpdate = false;
+}
+
+void Channel::GetValue(const Message& m)
+{
+    if (node == nullptr)
+    {
+        return;
+    }
+    Value value = 0;
+
+    switch (mode)
+    {
+        case PinMode::ANALOG_IN:
+        {
+            value = analogRead(pin);
+            break;
+        }
+        case PinMode::DIGITAL_IN:
+        {
+            value = (digitalRead(pin) == LOW) ? 1 : 0;
+            break;
+        }
+        default:
+            value = currentValue;
+            break;
+    }
+    QueueMessage(Operation::VALUE, value);
+}
+
+void Channel::SetValue(const Message& m)
+{
+    if (node == nullptr)
+    {
+        return;
+    }
+
+    Value value = 0;
+    switch (mode)
+    {
+        case PinMode::SERVO:
+        {
+            currentValue = m.value;
+            value = m.value;
+            ServoWrite(m.value);
+            break;
+        }
+        case PinMode::DIGITAL_OUT:
+        {
+            currentValue = m.value > 0 ? 1 : 0;
+            value = currentValue;
+            digitalWrite(pin, currentValue);
+            break;
+        }
+        default:
+            QueueMessage(Operation::ERROR);
+            return;
+            break;
+    }
+    QueueMessage(Operation::VALUE, value);
+}
+
+void Channel::SetValuePwm(const Message& m)
+{
+    if (node == nullptr)
+    {
+        return;
+    }
+    Value value = 0;
+
+    if (pwm)
+    {
+        if (mode != PinMode::DIGITAL_OUT)
+        {
+            SetMode(m, PinMode::DIGITAL_OUT);
+        }
+        currentValue = m.value;
+        value = currentValue;
+        analogWrite(pin, currentValue);
+    }
+    else
+    {
+        QueueMessage(Operation::ERROR);
+        return;
+    }
+    QueueMessage(Operation::VALUE, value);
 }

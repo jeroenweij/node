@@ -6,13 +6,15 @@
 
 #include <NodeLib/IVariableHandler.h>
 #include <NodeLib/id.h>
+#include <NodeLib/NodeComm.h>
 
 class ChannelManager : public NodeLib::IVariableHandler
 {
 public:
     ChannelManager();
-    void Init();
+    void Init(NodeLib::Node &node);
+    void Loop();
 
-    void ReceivedMessage(const NodeLib::Message& message);
+    void ReceivedMessage(const NodeLib::Message& m);
 private:
 };

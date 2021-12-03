@@ -2,13 +2,9 @@
 
 #include <stdint.h>
 
-enum class Operation : uint8_t
-{
-    GET,
-    SET,
-    SETPWM,
-    SENDQ
-};
+#include "EOperation.h"
+
+using Value = uint8_t;
 
 namespace NodeLib
 {
@@ -25,7 +21,14 @@ namespace NodeLib
         {
         }
 
-        Id(uint8_t node, uint8_t channel, Operation operation) :
+        Id(const uint8_t node, const uint8_t channel) :
+            node(node),
+            channel(channel),
+            operation(Operation::GET)
+        {
+        }
+
+        Id(const uint8_t node, const uint8_t channel, const Operation operation) :
             node(node),
             channel(channel),
             operation(operation)
@@ -44,11 +47,29 @@ namespace NodeLib
     struct __attribute__((packed)) Message
     {
         Id id;
-        uint8_t value;
+        Value value;
 
         Message() :
             id(0, 0, Operation::GET),
             value(0)
+        {
+        }
+
+        Message(int node, const Operation op) :
+            id(node, 0, op),
+            value(0)
+        {
+        }
+
+        Message(const uint8_t node, const uint8_t channel, const Operation operation, const Value value) :
+            id(node, channel, operation),
+            value(value)
+        {
+        }
+
+        Message(const Id& id, const Value value) :
+            id(id),
+            value(value)
         {
         }
     };
