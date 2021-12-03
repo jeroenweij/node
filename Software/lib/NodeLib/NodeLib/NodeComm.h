@@ -1,3 +1,7 @@
+/*************************************************************
+* Created by J. Weij
+*************************************************************/
+
 #pragma once
 
 #include "IVariableHandler.h"
@@ -7,22 +11,24 @@ namespace NodeLib
 {
     class Node
     {
-public:
+      public:
         Node(int nodeId, int enablePin);
 
         void RegisterHandler(IVariableHandler* handler);
-        void WriteMessage(Id, uint8_t value);
+        void QueueMessage(const Id& id, const uint8_t value);
 
         void Init();
         void Loop();
 
-protected:
+      protected:
         bool ReadMessage();
         void flushQueue();
         void setEnable(bool enable);
 
-private:
-        const uint8_t frameStart[2];
+      private:
+        void WriteMessage(Message& m);
+        void HandleInternalMessage(Message& m);
+
         const int nodeId;
         const int enablePin;
         const NodeLib::Id sendRequest;

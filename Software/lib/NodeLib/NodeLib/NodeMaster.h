@@ -1,19 +1,21 @@
+/*************************************************************
+* Created by J. Weij
+*************************************************************/
+
 #pragma once
 
 #include "NodeComm.h"
 
 namespace NodeLib
 {
-    class NodeMaster : Node
+    class NodeMaster : public Node
     {
-public:
-        using Node::WriteMessage;
-
+      public:
         NodeMaster(int enablePin);
 
         void Init();
         void Loop();
 
-private:
+      private:
     };
-}
+} // namespace NodeLib

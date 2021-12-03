@@ -3,7 +3,7 @@
 2,	,       ENABLE 485
 3,	PWM,    SERVO 1
 4,	A6,     USER 1
-5,	PWM,    SERVO2 
+5,	PWM,    SERVO 2 
 6,	PWM A7, USER 3
 7,	,       
 8,	A8,     USER 4
@@ -12,10 +12,10 @@
 11,	PWM,    MOSFET 1
 12,	A10,    USER 2
 13,	PWM,    MOSFET 2
-18,	A0,      
-19,	A1,      
-20,	A2,
-21,	A3,
+18,	A0,     USER 7 
+19,	A1,     USER 8 
+20,	A2,     USER 9
+21,	A3,     
 22,	A4,
 23,	A5,
 

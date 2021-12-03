@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PIN_HEADER="Software/pins.h"
+PIN_DEFINITION="$1"
+PIN_HEADER="$2"
 rm -rf $PIN_HEADER
 
 echo "" >> $PIN_HEADER
@@ -22,6 +23,6 @@ while read line; do
         fi
     fi
 
-done < pins.txt  
+done < ${PIN_DEFINITION} 
     
 

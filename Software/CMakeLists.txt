@@ -7,16 +7,24 @@ project(Node C CXX)
 
 add_subdirectory(tools)
 add_subdirectory(lib)
+add_subdirectory(pins)
 
 add_executable(${CMAKE_PROJECT_NAME} 
     src/Node.cpp
-    )
+    src/Channel.h
+    src/Channel.cpp
+    src/ChannelManager.h
+    src/ChannelManager.cpp
+)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES SUFFIX ".elf")
+
 target_link_libraries(${CMAKE_PROJECT_NAME}
     arduinocore
     avrlib
+    pins
     NodeLib
     arduinoServo
-    )
+)
 
+add_dependencies(${CMAKE_PROJECT_NAME} generate_pins)
 

@@ -13,9 +13,7 @@ namespace NodeLib
 
     class IVariableHandler
     {
-    public:
-
+      public:
         virtual void ReceivedMessage(const Message& message) = 0;
-
     };
 }
