@@ -27,24 +27,26 @@ namespace NodeLib
         void Loop();
 
       protected:
-        static const uint8_t masterNodeId = 0;
-        static const int nodeSpacing = 150;
-
         bool ReadMessage();
         void flushQueue();
         void setEnable(bool enable);
         void WriteMessage(const Message& m);
         virtual void HandleMasterMessage(const Message& m) { }
 
+        static const uint8_t masterNodeId = 0;
+        static const int nodeSpacing = 150;
+        IVariableHandler* handler;
+        uint8_t nodeId;
+
       private:
         void HandlePollRequest();
+        void HandleMessage(const Message& m);
         void HandleInternalMessage(const Message& m);
+        bool FindFrameStart();
 
         static const int queueSize = 25;
-        uint8_t nodeId;
         const int enablePin;
         const NodeLib::Id sendRequest;
-        IVariableHandler* handler;
         Message messageQueue[queueSize];
         int messagesQueued;
     };

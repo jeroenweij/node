@@ -16,10 +16,10 @@ using NodeLib::Operation;
 byte frameStart[2] = { 0xFF, 0x42 };
 
 Node::Node(const int enablePin) :
+    handler(nullptr),
     nodeId(99),
     enablePin(enablePin),
     sendRequest(nodeId, 0, Operation::SENDQ),
-    handler(nullptr),
     messagesQueued(0)
 {
 }
@@ -41,16 +41,18 @@ void Node::Init()
 
 void Node::Loop()
 {
-    while (ReadMessage())
+    while (Serial1.available())
     {
-        // Work is done in ReadMessage()
+        if (FindFrameStart())
+        {
+            ReadMessage();
+        }
     }
 }
 
-bool find()
+bool Node::FindFrameStart()
 {
     int findByte = 0;
-
     long timeout = millis() + 100;
 
     while (millis() < timeout)
@@ -85,11 +87,6 @@ bool find()
 
 bool Node::ReadMessage()
 {
-    if (!Serial1.available() || !find())
-    {
-        return false;
-    }
-
     Message m;
     size_t bytes = Serial1.readBytes((uint8_t*)&m, sizeof(m));
 
@@ -101,6 +98,21 @@ bool Node::ReadMessage()
 
     LOG_DEBUG("READ  Node: " << m.id.node << " Chan: " << m.id.channel << " Op: " << m.id.operation << " V: " << m.value);
 
+
+    if (nodeId != masterNodeId)
+    {
+        HandleMessage(m);
+    }
+    else
+    {
+        HandleMasterMessage(m);
+    }
+
+    return true;
+}
+
+void Node::HandleMessage(const Message& m)
+{
     if (m.id.node == nodeId)
     {
         if (m.id.channel == 0)
@@ -116,17 +128,10 @@ bool Node::ReadMessage()
         }
     }
     // Polrequest from master node
-    else if (m.id.node == masterNodeId && m.id.operation == Operation::POLLNODES)
+    else if (m.id.node == masterNodeId && m.id.operation == Operation::DETECTNODES)
     {
         HandlePollRequest();
     }
-    // Internal message to master node
-    else if (nodeId == masterNodeId && m.id.channel == 0)
-    {
-        HandleMasterMessage(m);
-    }
-
-    return true;
 }
 
 void Node::HandleInternalMessage(const Message& m)
@@ -191,7 +196,7 @@ void Node::RegisterHandler(IVariableHandler* handler)
 void NodeLib::Node::SetId(const uint8_t newId, const int ledPin)
 {
     nodeId = newId;
-    if (nodeId == 0 || nodeId > numNodes)
+    if (nodeId == masterNodeId || nodeId > numNodes)
     {
         while (true)
         {

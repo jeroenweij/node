@@ -56,6 +56,8 @@ void Channel::HandleCommand(const NodeLib::Message& m)
 void Channel::SetMode(const Message& m, const PinMode newMode)
 {
     LOG_INFO("Set mode, channel: " << m.id.channel << ", Mode: " << mode << "->" << newMode);
+    forceUpdate = true;
+
     if (mode == newMode)
     {
         return;

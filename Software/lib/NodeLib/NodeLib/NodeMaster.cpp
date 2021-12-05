@@ -13,11 +13,10 @@ using NodeLib::Message;
 using NodeLib::NodeMaster;
 using NodeLib::Operation;
 
-NodeMaster::NodeMaster(const int enablePin, const int ledPin) :
+NodeMaster::NodeMaster(const int enablePin) :
     Node(enablePin)
 {
-    pinMode(ledPin, OUTPUT);
-    SetId(masterNodeId, ledPin);
+    nodeId = masterNodeId;
 }
 
 void NodeMaster::Init()
@@ -45,7 +44,7 @@ void NodeMaster::DetectNodes()
 {
     LOG_DEBUG("DetectNodes");
     setEnable(true);
-    Message poll(0, Operation::POLLNODES);
+    Message poll(0, Operation::DETECTNODES);
     WriteMessage(poll);
     setEnable(false);
 
@@ -81,7 +80,7 @@ void NodeMaster::PollNextNode(const int prevNodeId)
     setEnable(false);
 }
 
-void NodeMaster::HandleMasterMessage(const Message& m)
+void NodeMaster::HandleInternalOperation(const Message& m)
 {
     switch (m.id.operation)
     {
@@ -97,6 +96,21 @@ void NodeMaster::HandleMasterMessage(const Message& m)
         }
         default:
             break;
+    }
+}
+
+void NodeMaster::HandleMasterMessage(const Message& m)
+{
+    if (m.id.channel == 0)
+    {
+        HandleInternalOperation(m);
+    }
+    else
+    {
+        if (handler)
+        {
+            handler->ReceivedMessage(m);
+        }
     }
 }
 

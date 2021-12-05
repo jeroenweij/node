@@ -13,7 +13,7 @@ namespace NodeLib
         VALUE,
         ERROR,
         SETMODE,
-        POLLNODES,
+        DETECTNODES,
         HELLOWORLD,
         SENDQ,
         ENDOFQ
@@ -41,8 +41,8 @@ namespace NodeLib
             case Operation::SETMODE:
                 oStrStream << "SETMODE";
                 break;
-            case Operation::POLLNODES:
-                oStrStream << "POLLNODES";
+            case Operation::DETECTNODES:
+                oStrStream << "DETECTNODES";
                 break;
             case Operation::HELLOWORLD:
                 oStrStream << "HELLOWORLD";
