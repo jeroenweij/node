@@ -1,5 +1,5 @@
 Designator,Mid X,Mid Y,Layer,Rotation
-ATMEGA,19.5,29.5,Top,0
+ATMEGA,19.5,29.5,Top,90
 C1,17.5,35,Top,0
 C2,23,20.5,Top,270
 C3,13.5,12,Top,180
