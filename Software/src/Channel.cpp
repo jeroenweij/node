@@ -11,8 +11,9 @@ using NodeLib::Message;
 using NodeLib::Node;
 using NodeLib::Operation;
 using NodeLib::PinMode;
+using NodeLib::ChannelId;
 
-Channel::Channel(const uint8_t channel, const int pin, const ChannelType type, const bool pwm) :
+Channel::Channel(const ChannelId channel, const int pin, const ChannelType type, const bool pwm) :
     pin(pin),
     channel(channel),
     type(type),

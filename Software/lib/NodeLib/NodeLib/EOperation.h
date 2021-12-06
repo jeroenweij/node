@@ -1,3 +1,7 @@
+/*************************************************************
+* Created by J. Weij
+*************************************************************/
+
 #pragma once
 
 #include <stdint.h>
@@ -19,38 +23,38 @@ namespace NodeLib
         ENDOFQ
     };
 
-    inline std::stringstream& operator<<(std::stringstream& oStrStream, const Operation Operation)
+    inline std::stringstream& operator<<(std::stringstream& oStrStream, const NodeLib::Operation Operation)
     {
         switch (Operation)
         {
-            case Operation::GET:
+            case NodeLib::Operation::GET:
                 oStrStream << "GET";
                 break;
-            case Operation::SET:
+            case NodeLib::Operation::SET:
                 oStrStream << "SET";
                 break;
-            case Operation::SETPWM:
+            case NodeLib::Operation::SETPWM:
                 oStrStream << "SETPWM";
                 break;
-            case Operation::VALUE:
+            case NodeLib::Operation::VALUE:
                 oStrStream << "VALUE";
                 break;
-            case Operation::ERROR:
+            case NodeLib::Operation::ERROR:
                 oStrStream << "ERROR";
                 break;
-            case Operation::SETMODE:
+            case NodeLib::Operation::SETMODE:
                 oStrStream << "SETMODE";
                 break;
-            case Operation::DETECTNODES:
+            case NodeLib::Operation::DETECTNODES:
                 oStrStream << "DETECTNODES";
                 break;
-            case Operation::HELLOWORLD:
+            case NodeLib::Operation::HELLOWORLD:
                 oStrStream << "HELLOWORLD";
                 break;
-            case Operation::SENDQ:
+            case NodeLib::Operation::SENDQ:
                 oStrStream << "SENDQ";
                 break;
-            case Operation::ENDOFQ:
+            case NodeLib::Operation::ENDOFQ:
                 oStrStream << "ENDOFQ";
                 break;
         }

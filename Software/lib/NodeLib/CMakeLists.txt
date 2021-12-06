@@ -8,6 +8,7 @@ add_library(NodeLib
     NodeLib/IVariableHandler.h
     NodeLib/EPinMode.h
     NodeLib/EOperation.h
+    NodeLib/EChannelId.h
 )
 
 target_include_directories(NodeLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

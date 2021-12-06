@@ -19,7 +19,7 @@ enum class ChannelType
 class Channel
 {
   public:
-    Channel(const uint8_t channel, const int pin, const ChannelType type, const bool pwm);
+    Channel(const NodeLib::ChannelId channel, const int pin, const ChannelType type, const bool pwm);
 
     void HandleCommand(const NodeLib::Message& m);
     void Init(NodeLib::Node& node);
@@ -40,7 +40,7 @@ class Channel
     void QueueMessage(const NodeLib::Operation operation);
     void QueueMessage(const NodeLib::Operation operation, const Value value);
 
-    const uint8_t channel;
+    const NodeLib::ChannelId channel;
     const ChannelType type;
     const bool pwm;
     NodeLib::PinMode mode;

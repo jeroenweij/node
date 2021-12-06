@@ -8,6 +8,7 @@
 #include "NodeMaster.h"
 #include "id.h"
 
+using NodeLib::ChannelId;
 using NodeLib::IVariableHandler;
 using NodeLib::Message;
 using NodeLib::NodeMaster;
@@ -101,7 +102,7 @@ void NodeMaster::HandleInternalOperation(const Message& m)
 
 void NodeMaster::HandleMasterMessage(const Message& m)
 {
-    if (m.id.channel == 0)
+    if (m.id.channel == ChannelId::INTERNAL_MSG)
     {
         HandleInternalOperation(m);
     }

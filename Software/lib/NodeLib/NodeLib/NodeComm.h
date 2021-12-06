@@ -46,7 +46,6 @@ namespace NodeLib
 
         static const int queueSize = 25;
         const int enablePin;
-        const NodeLib::Id sendRequest;
         Message messageQueue[queueSize];
         int messagesQueued;
     };

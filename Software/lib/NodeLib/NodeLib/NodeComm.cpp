@@ -7,6 +7,7 @@
 
 #include "NodeComm.h"
 
+using NodeLib::ChannelId;
 using NodeLib::Id;
 using NodeLib::Message;
 using NodeLib::Node;
@@ -19,7 +20,6 @@ Node::Node(const int enablePin) :
     handler(nullptr),
     nodeId(99),
     enablePin(enablePin),
-    sendRequest(nodeId, 0, Operation::SENDQ),
     messagesQueued(0)
 {
 }
@@ -98,7 +98,6 @@ bool Node::ReadMessage()
 
     LOG_DEBUG("READ  Node: " << m.id.node << " Chan: " << m.id.channel << " Op: " << m.id.operation << " V: " << m.value);
 
-
     if (nodeId != masterNodeId)
     {
         HandleMessage(m);
@@ -115,7 +114,7 @@ void Node::HandleMessage(const Message& m)
 {
     if (m.id.node == nodeId)
     {
-        if (m.id.channel == 0)
+        if (m.id.channel == ChannelId::INTERNAL_MSG)
         {
             HandleInternalMessage(m);
         }

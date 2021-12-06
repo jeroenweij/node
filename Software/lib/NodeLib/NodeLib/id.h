@@ -1,8 +1,13 @@
+/*************************************************************
+* Created by J. Weij
+*************************************************************/
+
 #pragma once
 
 #include <stdint.h>
 
 #include "EOperation.h"
+#include "EChannelId.h"
 
 using Value = uint8_t;
 
@@ -11,24 +16,24 @@ namespace NodeLib
     struct __attribute__((packed)) Id
     {
         uint8_t node;
-        uint8_t channel;
+        ChannelId channel;
         Operation operation;
 
         Id() :
             node(0),
-            channel(0),
+            channel(ChannelId::INTERNAL_MSG),
             operation(Operation::GET)
         {
         }
 
-        Id(const uint8_t node, const uint8_t channel) :
+        Id(const uint8_t node, const ChannelId channel) :
             node(node),
             channel(channel),
             operation(Operation::GET)
         {
         }
 
-        Id(const uint8_t node, const uint8_t channel, const Operation operation) :
+        Id(const uint8_t node, const ChannelId channel, const Operation operation) :
             node(node),
             channel(channel),
             operation(operation)
@@ -50,18 +55,18 @@ namespace NodeLib
         Value value;
 
         Message() :
-            id(0, 0, Operation::GET),
+            id(0, ChannelId::INTERNAL_MSG, Operation::GET),
             value(0)
         {
         }
 
         Message(int node, const Operation op) :
-            id(node, 0, op),
+            id(node, ChannelId::INTERNAL_MSG, op),
             value(0)
         {
         }
 
-        Message(const uint8_t node, const uint8_t channel, const Operation operation, const Value value) :
+        Message(const uint8_t node, const ChannelId channel, const Operation operation, const Value value) :
             id(node, channel, operation),
             value(value)
         {
