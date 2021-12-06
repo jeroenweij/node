@@ -113,6 +113,7 @@ void Channel::SetMode(const Message& m, const PinMode newMode)
                 mode = newMode;
                 pinMode(pin, OUTPUT);
                 ServoAttach();
+                ServoWrite(currentValue);
             }
             break;
     }

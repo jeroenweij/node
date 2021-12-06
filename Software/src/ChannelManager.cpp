@@ -25,7 +25,7 @@ Channel channels[channelCount] = {
     Channel(ChannelId::ANALOG_2, PIN_USER_8, ChannelType::ANALOG, false),
     Channel(ChannelId::ANALOG_3, PIN_USER_9, ChannelType::ANALOG, false),
     ServoChannel(ChannelId::SERVO_1, PIN_SERVO_1, ChannelType::SERVO, true),
-    ServoChannel(ChannelId::SERVO_2, PIN_SERVO_2, ChannelType::SERVO, true),
+    ServoChannel(ChannelId::SERVO_2, PIN_SERVO_2, ChannelType::SERVO, false),
     Channel(ChannelId::MOSFET_1, PIN_MOSFET_1, ChannelType::MOSFET, true),
     Channel(ChannelId::MOSFET_2, PIN_MOSFET_2, ChannelType::MOSFET, true),
 };
