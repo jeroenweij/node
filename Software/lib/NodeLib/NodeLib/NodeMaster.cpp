@@ -49,7 +49,7 @@ void NodeMaster::DetectNodes()
     WriteMessage(poll);
     setEnable(false);
 
-    long endTime = millis() + (nodeSpacing * (numNodes + 1));
+    unsigned long endTime = millis() + (nodeSpacing * (numNodes + 1));
     while (millis() < endTime)
     {
         Node::Loop();

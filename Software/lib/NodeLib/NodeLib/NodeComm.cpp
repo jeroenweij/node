@@ -53,7 +53,7 @@ void Node::Loop()
 bool Node::FindFrameStart()
 {
     int findByte = 0;
-    long timeout = millis() + 100;
+    unsigned long timeout = millis() + 100;
 
     while (millis() < timeout)
     {

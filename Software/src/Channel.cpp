@@ -7,11 +7,13 @@
 
 #include "Channel.h"
 
+using NodeLib::ChannelId;
 using NodeLib::Message;
 using NodeLib::Node;
 using NodeLib::Operation;
 using NodeLib::PinMode;
-using NodeLib::ChannelId;
+
+static const int debounceTime = 100;
 
 Channel::Channel(const ChannelId channel, const int pin, const ChannelType type, const bool pwm) :
     pin(pin),
@@ -21,7 +23,8 @@ Channel::Channel(const ChannelId channel, const int pin, const ChannelType type,
     mode(PinMode::DIGITAL_IN),
     currentValue(0),
     node(nullptr),
-    forceUpdate(false)
+    forceUpdate(false),
+    nextUpdateTime(0)
 {
 }
 
@@ -164,31 +167,36 @@ void Channel::Init(Node& node)
 
 void Channel::Loop()
 {
-    switch (mode)
+    if (millis() > nextUpdateTime || forceUpdate)
     {
-        case PinMode::ANALOG_IN:
+        switch (mode)
         {
-            Value value = analogRead(pin);
-            if (value != currentValue || forceUpdate)
+            case PinMode::ANALOG_IN:
             {
-                currentValue = value;
-                QueueMessage(Operation::VALUE, value);
+                Value value = analogRead(pin);
+                if (value != currentValue || forceUpdate)
+                {
+                    currentValue = value;
+                    QueueMessage(Operation::VALUE, value);
+                    nextUpdateTime = millis() + debounceTime;
+                }
+                break;
             }
-            break;
-        }
-        case PinMode::DIGITAL_IN:
-        {
-            Value value = (digitalRead(pin) == LOW) ? 1 : 0;
-            if (value != currentValue || forceUpdate)
+            case PinMode::DIGITAL_IN:
             {
-                currentValue = value;
-                QueueMessage(Operation::VALUE, value);
+                Value value = (digitalRead(pin) == LOW) ? 1 : 0;
+                if (value != currentValue || forceUpdate)
+                {
+                    currentValue = value;
+                    QueueMessage(Operation::VALUE, value);
+                    nextUpdateTime = millis() + debounceTime;
+                }
+                break;
             }
-            break;
+            default:
+                // Do nothing
+                break;
         }
-        default:
-            // Do nothing
-            break;
     }
     forceUpdate = false;
 }

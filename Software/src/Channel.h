@@ -47,4 +47,5 @@ class Channel
     Value currentValue;
     NodeLib::Node* node;
     bool forceUpdate;
+    unsigned long nextUpdateTime;
 };
