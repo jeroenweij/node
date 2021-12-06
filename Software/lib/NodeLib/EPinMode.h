@@ -16,7 +16,7 @@ namespace NodeLib
         SERVO,
     };
 
-    inline std::stringstream& operator<<(std::stringstream& oStrStream, const PinMode pinmode )
+    inline std::stringstream& operator<<(std::stringstream& oStrStream, const PinMode pinmode)
     {
         switch (pinmode)
         {
@@ -32,7 +32,6 @@ namespace NodeLib
             case PinMode::SERVO:
                 oStrStream << "SERVO";
                 break;
-
         }
 
         return oStrStream;

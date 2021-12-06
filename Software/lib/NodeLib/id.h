@@ -6,8 +6,8 @@
 
 #include <stdint.h>
 
-#include "EOperation.h"
 #include "EChannelId.h"
+#include "EOperation.h"
 
 using Value = uint8_t;
 

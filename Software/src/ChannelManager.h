@@ -5,16 +5,17 @@
 #pragma once
 
 #include <NodeLib/IVariableHandler.h>
-#include <NodeLib/id.h>
 #include <NodeLib/NodeComm.h>
+#include <NodeLib/id.h>
 
 class ChannelManager : public NodeLib::IVariableHandler
 {
-public:
+  public:
     ChannelManager();
-    void Init(NodeLib::Node &node);
+    void Init(NodeLib::Node& node);
     void Loop();
 
     void ReceivedMessage(const NodeLib::Message& m);
-private:
+
+  private:
 };
