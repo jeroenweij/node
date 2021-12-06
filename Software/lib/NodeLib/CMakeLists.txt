@@ -1,17 +1,17 @@
 add_library(NodeLib
-    NodeLib/id.h
-    NodeLib/id.cpp
-    NodeLib/NodeComm.h
-    NodeLib/NodeComm.cpp
-    NodeLib/NodeMaster.h
-    NodeLib/NodeMaster.cpp
-    NodeLib/IVariableHandler.h
-    NodeLib/EPinMode.h
-    NodeLib/EOperation.h
-    NodeLib/EChannelId.h
+    id.h
+    id.cpp
+    NodeComm.h
+    NodeComm.cpp
+    NodeMaster.h
+    NodeMaster.cpp
+    IVariableHandler.h
+    EPinMode.h
+    EOperation.h
+    EChannelId.h
 )
 
-target_include_directories(NodeLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(NodeLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 target_link_libraries(NodeLib
     arduinocore
