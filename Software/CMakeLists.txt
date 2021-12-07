@@ -1,5 +1,5 @@
 
-set(CMAKE_TOOLCHAIN_FILE tools/cmake/ArduinoToolchain.cmake)
+include(tools/cmake/arduino.cmake)
 
 cmake_minimum_required(VERSION 2.8)
 

@@ -20,14 +20,14 @@ ChannelManager manager;
 void setup(void)
 {
     Serial.begin(115200);
+    pinMode(RXLED, OUTPUT);
+    pinMode(PIN_LED, OUTPUT);
 
     uint8_t nodeId = eeprom_read_byte((uint8_t*)0);
     Serial.println(nodeId);
     node.SetId(nodeId, RXLED);
 
-    pinMode(PIN_LED, OUTPUT);
     digitalWrite(PIN_LED, LOW);
-    pinMode(RXLED, OUTPUT);
     digitalWrite(RXLED, HIGH);
 
     manager.Init(node);
