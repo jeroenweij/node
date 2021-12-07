@@ -26,5 +26,6 @@ namespace NodeLib
         void HandleInternalOperation(const Message& m);
 
         bool activeNodes[numNodes];
+        bool nodesFound;
     };
 } // namespace NodeLib

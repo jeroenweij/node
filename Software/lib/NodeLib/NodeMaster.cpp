@@ -15,7 +15,8 @@ using NodeLib::NodeMaster;
 using NodeLib::Operation;
 
 NodeMaster::NodeMaster(const int enablePin) :
-    Node(enablePin)
+    Node(enablePin),
+    nodesFound(false)
 {
     nodeId = masterNodeId;
 }
@@ -63,22 +64,25 @@ void NodeMaster::PollNextNode(const int prevNodeId)
     // Flush any queued messages
     flushQueue();
 
-    // Determine next active node
-    int nodeId = prevNodeId;
-    do
+    if (nodesFound)
     {
-        nodeId++;
-        if (nodeId > numNodes)
+        // Determine next active node
+        int nodeId = prevNodeId;
+        do
         {
-            nodeId = 1;
-        }
+            nodeId++;
+            if (nodeId > numNodes)
+            {
+                nodeId = 1;
+            }
 
-    } while (!activeNodes[nodeId - 1]);
+        } while (!activeNodes[nodeId - 1]);
 
-    setEnable(true);
-    Message poll(nodeId, Operation::SENDQ);
-    WriteMessage(poll);
-    setEnable(false);
+        setEnable(true);
+        Message poll(nodeId, Operation::SENDQ);
+        WriteMessage(poll);
+        setEnable(false);
+    }
 }
 
 void NodeMaster::HandleInternalOperation(const Message& m)
@@ -121,5 +125,6 @@ void NodeMaster::NodeHello(int nodeId)
     {
         LOG_INFO("Hello Node " << nodeId);
         activeNodes[nodeId - 1] = true;
+        nodesFound = true;
     }
 }
