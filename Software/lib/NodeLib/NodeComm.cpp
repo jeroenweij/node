@@ -157,6 +157,9 @@ void Node::flushQueue()
     for (int i = 0; i < messagesQueued; i++)
     {
         WriteMessage(messageQueue[i]);
+
+        // Limit rate so reader can keep up
+        delay(10);
     }
     messagesQueued = 0;
 
@@ -170,7 +173,12 @@ void Node::flushQueue()
 
 void Node::setEnable(bool enable)
 {
+    static const int delayMs = 10;
+    if (!enable)
+        delay(delayMs);
     digitalWrite(enablePin, enable);
+    if (enable)
+        delay(delayMs + 5);
 }
 
 void Node::HandlePollRequest()
@@ -178,9 +186,9 @@ void Node::HandlePollRequest()
     LOG_INFO("Handle poll request");
     if (nodeId > 0)
     {
-        digitalWrite(17, LOW);
         const Message m(nodeId, Operation::HELLOWORLD);
         delay((nodeId - 1) * nodeSpacing);
+        LOG_INFO("Return Hello world");
         setEnable(true);
         WriteMessage(m);
         setEnable(false);

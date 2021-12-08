@@ -27,9 +27,6 @@ void NodeMaster::Init()
 
     delay(500);
     DetectNodes();
-
-    //Start polling nodes
-    PollNextNode(0);
 }
 
 void NodeMaster::Loop()
@@ -42,9 +39,15 @@ void NodeLib::NodeMaster::FlushNow()
     flushQueue();
 }
 
+void NodeMaster::StartPollingNodes()
+{
+    //Start polling nodes
+    PollNextNode(0);
+}
+
 void NodeMaster::DetectNodes()
 {
-    LOG_DEBUG("DetectNodes");
+    LOG_INFO("DetectNodes");
     setEnable(true);
     Message poll(0, Operation::DETECTNODES);
     WriteMessage(poll);
@@ -56,7 +59,7 @@ void NodeMaster::DetectNodes()
         Node::Loop();
     }
 
-    LOG_DEBUG("Done detecting");
+    LOG_INFO("Done detecting");
 }
 
 void NodeMaster::PollNextNode(const int prevNodeId)

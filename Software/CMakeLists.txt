@@ -4,6 +4,7 @@ include(tools/cmake/arduino.cmake)
 cmake_minimum_required(VERSION 2.8)
 
 project(Node C CXX)
+#add_compile_definitions(DEBUG)
 
 add_subdirectory(tools)
 add_subdirectory(lib)
