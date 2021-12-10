@@ -1,8 +1,8 @@
 add_library(NodeLib
     id.h
     id.cpp
-    NodeComm.h
-    NodeComm.cpp
+    Node.h
+    Node.cpp
     NodeMaster.h
     NodeMaster.cpp
     IVariableHandler.h
@@ -16,4 +16,4 @@ target_include_directories(NodeLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..)
 target_link_libraries(NodeLib
     arduinocore
     libtools
-    )
+)

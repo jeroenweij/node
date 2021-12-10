@@ -11,7 +11,7 @@ add_subdirectory(lib)
 add_subdirectory(pins)
 
 add_executable(${CMAKE_PROJECT_NAME} 
-    src/Node.cpp
+    src/NodeSketch.cpp
     src/Channel.h
     src/Channel.cpp
     src/ServoChannel.h

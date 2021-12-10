@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "NodeComm.h"
+#include "Node.h"
 
 namespace NodeLib
 {

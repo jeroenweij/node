@@ -5,7 +5,7 @@
 #include "Arduino.h"
 #include <tools/Logger.h>
 
-#include "NodeComm.h"
+#include "Node.h"
 
 using NodeLib::ChannelId;
 using NodeLib::Id;

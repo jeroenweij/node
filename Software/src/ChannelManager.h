@@ -5,7 +5,7 @@
 #pragma once
 
 #include <NodeLib/IVariableHandler.h>
-#include <NodeLib/NodeComm.h>
+#include <NodeLib/Node.h>
 #include <NodeLib/id.h>
 
 class ChannelManager : public NodeLib::IVariableHandler

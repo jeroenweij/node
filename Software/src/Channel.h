@@ -5,7 +5,7 @@
 #pragma once
 
 #include "NodeLib/EPinMode.h"
-#include "NodeLib/NodeComm.h"
+#include "NodeLib/Node.h"
 #include "NodeLib/id.h"
 
 enum class ChannelType

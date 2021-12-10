@@ -11,7 +11,7 @@
 
 #include "Arduino.h"
 #include "ChannelManager.h"
-#include "NodeLib/NodeComm.h"
+#include "NodeLib/Node.h"
 
 using NodeLib::Node;
 
