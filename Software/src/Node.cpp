@@ -15,7 +15,7 @@
 
 using NodeLib::Node;
 
-Node node(PIN_ENABLE_485);
+Node node(PIN_ENABLE_485, PIN_LED);
 ChannelManager manager;
 
 void setup(void)
@@ -25,15 +25,14 @@ void setup(void)
     digitalWrite(PIN_LED, HIGH);
 
     uint8_t nodeId = eeprom_read_byte((uint8_t*)0);
-    Serial.println(nodeId);
-    node.SetId(nodeId, PIN_LED);
-
-    digitalWrite(PIN_LED, LOW);
+    LOG_INFO("Node Id = " << nodeId);
+    node.SetId(nodeId);
 
     manager.Init(node);
 
     node.RegisterHandler(&manager);
     node.Init();
+    digitalWrite(PIN_LED, LOW);
     LOG_INFO(F("Node Initialised"));
 }
 

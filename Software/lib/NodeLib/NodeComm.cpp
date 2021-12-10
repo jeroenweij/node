@@ -16,12 +16,17 @@ using NodeLib::Operation;
 
 byte frameStart[2] = { 0xFF, 0x42 };
 
-Node::Node(const int enablePin) :
+Node::Node(const int enablePin, const int ledPin) :
     handler(nullptr),
     nodeId(99),
     enablePin(enablePin),
+    ledPin(ledPin),
     messagesQueued(0)
 {
+    pinMode(enablePin, OUTPUT);
+    pinMode(ledPin, OUTPUT);
+    digitalWrite(ledPin, LOW);
+    digitalWrite(enablePin, LOW);
 }
 
 void Node::WriteMessage(const Message& m)
@@ -34,7 +39,8 @@ void Node::WriteMessage(const Message& m)
 void Node::Init()
 {
     pinMode(enablePin, OUTPUT);
-    setEnable(false);
+    pinMode(ledPin, OUTPUT);
+    digitalWrite(enablePin, LOW);
 
     Serial1.begin(9600);
 }
@@ -153,6 +159,7 @@ void Node::flushQueue()
 {
     LOG_DEBUG("Flush queue");
 
+    digitalWrite(ledPin, HIGH);
     setEnable(true);
     for (int i = 0; i < messagesQueued; i++)
     {
@@ -169,6 +176,7 @@ void Node::flushQueue()
         WriteMessage(end);
     }
     setEnable(false);
+    digitalWrite(ledPin, LOW);
 }
 
 void Node::setEnable(bool enable)
@@ -200,7 +208,7 @@ void Node::RegisterHandler(IVariableHandler* handler)
     this->handler = handler;
 }
 
-void NodeLib::Node::SetId(const uint8_t newId, const int ledPin)
+void NodeLib::Node::SetId(const uint8_t newId)
 {
     nodeId = newId;
     if (nodeId == masterNodeId || nodeId > numNodes)

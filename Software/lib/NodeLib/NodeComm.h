@@ -14,13 +14,13 @@ namespace NodeLib
     class Node
     {
       public:
-        Node(const int enablePin);
+        Node(const int enablePin, const int ledPin);
 
         void RegisterHandler(IVariableHandler* handler);
         void QueueMessage(const Message& m);
         void QueueMessage(const Id& id, const Value value);
 
-        void SetId(const uint8_t newId, const int ledPin);
+        void SetId(const uint8_t newId);
         uint8_t GetId();
 
         void Init();
@@ -46,6 +46,7 @@ namespace NodeLib
 
         static const int queueSize = 25;
         const int enablePin;
+        const int ledPin;
         Message messageQueue[queueSize];
         int messagesQueued;
     };
