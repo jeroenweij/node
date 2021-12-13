@@ -157,7 +157,7 @@ void Node::HandleInternalMessage(const Message& m)
 
 void Node::flushQueue()
 {
-    LOG_DEBUG("Flush queue");
+    LOG_DEBUG(F("Flush queue"));
 
     digitalWrite(ledPin, HIGH);
     setEnable(true);
@@ -191,12 +191,12 @@ void Node::setEnable(bool enable)
 
 void Node::HandlePollRequest()
 {
-    LOG_INFO("Handle poll request");
+    LOG_INFO(F("Handle poll request"));
     if (nodeId > 0)
     {
         const Message m(nodeId, Operation::HELLOWORLD);
         delay((nodeId - 1) * nodeSpacing);
-        LOG_INFO("Return Hello world");
+        LOG_INFO(F("Return Hello world"));
         setEnable(true);
         WriteMessage(m);
         setEnable(false);

@@ -47,7 +47,7 @@ void NodeMaster::StartPollingNodes()
 
 void NodeMaster::DetectNodes()
 {
-    LOG_INFO("DetectNodes");
+    LOG_INFO(F("Detecting Nodes"));
     setEnable(true);
     Message poll(0, Operation::DETECTNODES);
     WriteMessage(poll);
@@ -59,7 +59,7 @@ void NodeMaster::DetectNodes()
         Node::Loop();
     }
 
-    LOG_INFO("Done detecting");
+    LOG_INFO(F("Done Detecting Nodes"));
 }
 
 void NodeMaster::PollNextNode(const int prevNodeId)
