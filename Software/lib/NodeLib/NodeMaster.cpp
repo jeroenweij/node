@@ -128,6 +128,6 @@ void NodeMaster::NodeHello(int nodeId)
     {
         LOG_INFO("Hello Node " << nodeId);
         activeNodes[nodeId - 1] = true;
-        nodesFound = true;
+        nodesFound              = true;
     }
 }

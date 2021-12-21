@@ -26,9 +26,9 @@ class Channel
     void Loop();
 
   protected:
-    virtual void ServoAttach() { }
-    virtual void ServoDetach() { }
-    virtual void ServoWrite(int) { }
+    virtual void ServoAttach() {}
+    virtual void ServoDetach() {}
+    virtual void ServoWrite(int) {}
 
     const int pin;
 
@@ -41,11 +41,11 @@ class Channel
     void QueueMessage(const NodeLib::Operation operation, const Value value);
 
     const NodeLib::ChannelId channel;
-    const ChannelType type;
-    const bool pwm;
-    NodeLib::PinMode mode;
-    Value currentValue;
-    NodeLib::Node* node;
-    bool forceUpdate;
-    unsigned long nextUpdateTime;
+    const ChannelType        type;
+    const bool               pwm;
+    NodeLib::PinMode         mode;
+    Value                    currentValue;
+    NodeLib::Node*           node;
+    bool                     forceUpdate;
+    unsigned long            nextUpdateTime;
 };

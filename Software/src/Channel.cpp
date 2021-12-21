@@ -133,7 +133,7 @@ void Channel::QueueMessage(const NodeLib::Operation operation, const Value value
     {
         return;
     }
-    node->QueueMessage({ node->GetId(), channel, operation, value });
+    node->QueueMessage({node->GetId(), channel, operation, value});
 }
 
 void Channel::Init(Node& node)
@@ -241,14 +241,14 @@ void Channel::SetValue(const Message& m)
         case PinMode::SERVO:
         {
             currentValue = m.value;
-            value = m.value;
+            value        = m.value;
             ServoWrite(m.value);
             break;
         }
         case PinMode::DIGITAL_OUT:
         {
             currentValue = m.value > 0 ? 1 : 0;
-            value = currentValue;
+            value        = currentValue;
             digitalWrite(pin, currentValue);
             break;
         }
@@ -275,7 +275,7 @@ void Channel::SetValuePwm(const Message& m)
             SetMode(m, PinMode::DIGITAL_OUT);
         }
         currentValue = m.value;
-        value = currentValue;
+        value        = currentValue;
         analogWrite(pin, currentValue);
     }
     else

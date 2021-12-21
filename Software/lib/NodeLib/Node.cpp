@@ -14,7 +14,7 @@ using NodeLib::Node;
 using NodeLib::numNodes;
 using NodeLib::Operation;
 
-byte frameStart[2] = { 0xFF, 0x42 };
+byte frameStart[2] = {0xFF, 0x42};
 
 Node::Node(const int enablePin, const int ledPin) :
     handler(nullptr),
@@ -58,8 +58,8 @@ void Node::Loop()
 
 bool Node::FindFrameStart()
 {
-    int findByte = 0;
-    unsigned long timeout = millis() + 100;
+    int           findByte = 0;
+    unsigned long timeout  = millis() + 100;
 
     while (millis() < timeout)
     {
@@ -94,7 +94,7 @@ bool Node::FindFrameStart()
 bool Node::ReadMessage()
 {
     Message m;
-    size_t bytes = Serial1.readBytes((uint8_t*)&m, sizeof(m));
+    size_t  bytes = Serial1.readBytes((uint8_t*)&m, sizeof(m));
 
     if (bytes != sizeof(m))
     {
@@ -231,7 +231,7 @@ uint8_t Node::GetId()
 
 void Node::QueueMessage(const Id& id, const Value value)
 {
-    QueueMessage({ id, value });
+    QueueMessage({id, value});
 }
 
 void Node::QueueMessage(const NodeLib::Message& m)

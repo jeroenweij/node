@@ -15,7 +15,7 @@ namespace NodeLib
 {
     struct __attribute__((packed)) Id
     {
-        uint8_t node;
+        uint8_t   node;
         ChannelId channel;
         Operation operation;
 
@@ -51,7 +51,7 @@ namespace NodeLib
 
     struct __attribute__((packed)) Message
     {
-        Id id;
+        Id    id;
         Value value;
 
         Message() :
@@ -78,4 +78,4 @@ namespace NodeLib
         {
         }
     };
-}
+} // namespace NodeLib

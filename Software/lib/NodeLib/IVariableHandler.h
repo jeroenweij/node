@@ -16,4 +16,4 @@ namespace NodeLib
       public:
         virtual void ReceivedMessage(const Message& message) = 0;
     };
-}
+} // namespace NodeLib

@@ -76,4 +76,4 @@ namespace NodeLib
 
         return oStrStream;
     }
-}
+} // namespace NodeLib
