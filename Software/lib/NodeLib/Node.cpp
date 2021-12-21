@@ -19,9 +19,9 @@ byte frameStart[2] = {0xFF, 0x42};
 Node::Node(const int enablePin, const int ledPin) :
     handler(nullptr),
     nodeId(99),
+    messagesQueued(0),
     enablePin(enablePin),
-    ledPin(ledPin),
-    messagesQueued(0)
+    ledPin(ledPin)
 {
     pinMode(enablePin, OUTPUT);
     pinMode(ledPin, OUTPUT);
@@ -42,7 +42,7 @@ void Node::Init()
     pinMode(ledPin, OUTPUT);
     digitalWrite(enablePin, LOW);
 
-    Serial1.begin(9600);
+    Serial1.begin(19200);
 }
 
 void Node::Loop()
@@ -146,7 +146,9 @@ void Node::HandleInternalMessage(const Message& m)
     {
         case Operation::SENDQ:
         {
+            setEnable(true);
             flushQueue();
+            setEnable(false);
             break;
         }
         default:
@@ -160,39 +162,44 @@ void Node::flushQueue()
     LOG_DEBUG(F("Flush queue"));
 
     digitalWrite(ledPin, HIGH);
-    setEnable(true);
     for (int i = 0; i < messagesQueued; i++)
     {
         WriteMessage(messageQueue[i]);
 
         // Limit rate so reader can keep up
-        delay(10);
+        delay(5);
     }
     messagesQueued = 0;
 
-    if (nodeId > 0)
+    if (nodeId != masterNodeId)
     {
         Message end(nodeId, Operation::ENDOFQ);
         WriteMessage(end);
     }
-    setEnable(false);
     digitalWrite(ledPin, LOW);
 }
 
 void Node::setEnable(bool enable)
 {
     static const int delayMs = 10;
+
     if (!enable)
+    {
         delay(delayMs);
+    }
+
     digitalWrite(enablePin, enable);
+
     if (enable)
+    {
         delay(delayMs + 5);
+    }
 }
 
 void Node::HandlePollRequest()
 {
     LOG_INFO(F("Handle poll request"));
-    if (nodeId > 0)
+    if (nodeId != masterNodeId)
     {
         const Message m(nodeId, Operation::HELLOWORLD);
         delay((nodeId - 1) * nodeSpacing);
@@ -216,10 +223,13 @@ void NodeLib::Node::SetId(const uint8_t newId)
         while (true)
         {
             LOG_ERROR("Invalid Node Id: " << nodeId);
-            digitalWrite(ledPin, HIGH);
-            delay(500);
-            digitalWrite(ledPin, LOW);
-            delay(500);
+            while (true)
+            {
+                digitalWrite(ledPin, HIGH);
+                delay(500);
+                digitalWrite(ledPin, LOW);
+                delay(500);
+            }
         }
     }
 }

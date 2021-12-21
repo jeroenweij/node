@@ -16,7 +16,7 @@ namespace NodeLib
 
         void Init();
         void Loop();
-        void FlushNow();
+        void FlushNow(const bool force = false);
         void StartPollingNodes();
 
       private:

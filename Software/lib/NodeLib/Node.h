@@ -33,10 +33,13 @@ namespace NodeLib
         void         WriteMessage(const Message& m);
         virtual void HandleMasterMessage(const Message& m) {}
 
+        static const int     queueSize    = 25;
         static const uint8_t masterNodeId = 0;
         static const int     nodeSpacing  = 150;
-        IVariableHandler*    handler;
-        uint8_t              nodeId;
+
+        IVariableHandler* handler;
+        uint8_t           nodeId;
+        int               messagesQueued;
 
       private:
         void HandlePollRequest();
@@ -44,10 +47,8 @@ namespace NodeLib
         void HandleInternalMessage(const Message& m);
         bool FindFrameStart();
 
-        static const int queueSize = 25;
-        const int        enablePin;
-        const int        ledPin;
-        Message          messageQueue[queueSize];
-        int              messagesQueued;
+        const int enablePin;
+        const int ledPin;
+        Message   messageQueue[queueSize];
     };
 } // namespace NodeLib

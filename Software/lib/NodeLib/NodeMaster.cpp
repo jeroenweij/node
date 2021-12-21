@@ -34,9 +34,14 @@ void NodeMaster::Loop()
     Node::Loop();
 }
 
-void NodeLib::NodeMaster::FlushNow()
+void NodeLib::NodeMaster::FlushNow(const bool force)
 {
-    flushQueue();
+    if (force || messagesQueued > (queueSize * 8 / 10))
+    {
+        setEnable(true);
+        flushQueue();
+        setEnable(false);
+    }
 }
 
 void NodeMaster::StartPollingNodes()
@@ -65,6 +70,7 @@ void NodeMaster::DetectNodes()
 void NodeMaster::PollNextNode(const int prevNodeId)
 {
     // Flush any queued messages
+    setEnable(true);
     flushQueue();
 
     if (nodesFound)
@@ -81,11 +87,10 @@ void NodeMaster::PollNextNode(const int prevNodeId)
 
         } while (!activeNodes[nodeId - 1]);
 
-        setEnable(true);
         Message poll(nodeId, Operation::SENDQ);
         WriteMessage(poll);
-        setEnable(false);
     }
+    setEnable(false);
 }
 
 void NodeMaster::HandleInternalOperation(const Message& m)
