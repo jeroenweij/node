@@ -6,8 +6,8 @@
 
 using NodeLib::ChannelId;
 
-ServoChannel::ServoChannel(const ChannelId channel, const int pin, const ChannelType type, const bool pwm) :
-    Channel(channel, pin, type, pwm)
+ServoChannel::ServoChannel(const ChannelId channel, const int pin, const bool pwm) :
+    Channel(channel, pin, ChannelType::SERVO, pwm)
 {
 }
 

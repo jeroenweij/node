@@ -11,7 +11,7 @@
 class ServoChannel : public Channel
 {
   public:
-    ServoChannel(const NodeLib::ChannelId channel, const int pin, const ChannelType type, const bool pwm);
+    ServoChannel(const NodeLib::ChannelId channel, const int pin, const bool pwm);
 
   private:
     void ServoAttach() override;

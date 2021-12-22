@@ -28,7 +28,7 @@ class Channel
   protected:
     virtual void ServoAttach() {}
     virtual void ServoDetach() {}
-    virtual void ServoWrite(int) {}
+    virtual void ServoWrite(int);
 
     const int pin;
 

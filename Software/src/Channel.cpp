@@ -201,6 +201,10 @@ void Channel::Loop()
     forceUpdate = false;
 }
 
+void Channel::ServoWrite(int) {
+    LOG_ERROR("Not a servo channel");
+}
+
 void Channel::GetValue(const Message& m)
 {
     if (node == nullptr)
