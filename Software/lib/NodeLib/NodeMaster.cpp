@@ -3,6 +3,7 @@
 *************************************************************/
 
 #include "Arduino.h"
+#include <tools/DelayTimer.h>
 #include <tools/Logger.h>
 
 #include "NodeMaster.h"
@@ -58,8 +59,8 @@ void NodeMaster::DetectNodes()
     WriteMessage(poll);
     setEnable(false);
 
-    unsigned long endTime = millis() + (nodeSpacing * (numNodes + 1));
-    while (millis() < endTime)
+    DelayTimer timeout(nodeSpacing * (numNodes + 1));
+    while (timeout.isRunning() && !timeout.Finished())
     {
         Node::Loop();
     }

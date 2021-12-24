@@ -201,7 +201,8 @@ void Channel::Loop()
     forceUpdate = false;
 }
 
-void Channel::ServoWrite(int) {
+void Channel::ServoWrite(int)
+{
     LOG_ERROR("Not a servo channel");
 }
 

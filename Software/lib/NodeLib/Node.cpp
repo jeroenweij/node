@@ -3,6 +3,7 @@
 *************************************************************/
 
 #include "Arduino.h"
+#include <tools/DelayTimer.h>
 #include <tools/Logger.h>
 
 #include "Node.h"
@@ -58,10 +59,10 @@ void Node::Loop()
 
 bool Node::FindFrameStart()
 {
-    int           findByte = 0;
-    unsigned long timeout  = millis() + 100;
+    int        findByte = 0;
+    DelayTimer timeout(100);
 
-    while (millis() < timeout)
+    while (timeout.isRunning() && !timeout.Finished())
     {
         uint8_t b = Serial1.read();
         if (b == frameStart[findByte])
