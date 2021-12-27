@@ -17,12 +17,14 @@ using NodeLib::Operation;
 
 byte frameStart[2] = {0xFF, 0x42};
 
-Node::Node(const int enablePin, const int ledPin) :
+Node::Node(const int enablePin, const int ledPin, const int buttonPin) :
+    errorHandler(ledPin, buttonPin),
     handler(nullptr),
     nodeId(99),
     messagesQueued(0),
     enablePin(enablePin),
-    ledPin(ledPin)
+    ledPin(ledPin),
+    hearthBeatTimer()
 {
     pinMode(enablePin, OUTPUT);
     pinMode(ledPin, OUTPUT);
@@ -54,6 +56,11 @@ void Node::Loop()
         {
             ReadMessage();
         }
+    }
+
+    if (hearthBeatTimer.Finished() && handler != nullptr)
+    {
+        handler->ConnectionLost();
     }
 }
 
@@ -90,6 +97,11 @@ bool Node::FindFrameStart()
         }
     }
     return false;
+}
+
+void Node::ResetHearthBeat()
+{
+    hearthBeatTimer.Start(500);
 }
 
 bool Node::ReadMessage()
@@ -150,6 +162,7 @@ void Node::HandleInternalMessage(const Message& m)
             setEnable(true);
             flushQueue();
             setEnable(false);
+            ResetHearthBeat();
             break;
         }
         default:
@@ -221,17 +234,8 @@ void NodeLib::Node::SetId(const uint8_t newId)
     nodeId = newId;
     if (nodeId == masterNodeId || nodeId > numNodes)
     {
-        while (true)
-        {
-            LOG_ERROR("Invalid Node Id: " << nodeId);
-            while (true)
-            {
-                digitalWrite(ledPin, HIGH);
-                delay(500);
-                digitalWrite(ledPin, LOW);
-                delay(500);
-            }
-        }
+        LOG_ERROR("Invalid Node Id: " << nodeId);
+        errorHandler.Error(false);
     }
 }
 

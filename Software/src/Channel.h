@@ -24,6 +24,7 @@ class Channel
     void HandleCommand(const NodeLib::Message& m);
     void Init(NodeLib::Node& node);
     void Loop();
+    void DisableOutput();
 
   protected:
     virtual void ServoAttach() {}
@@ -34,7 +35,7 @@ class Channel
 
   private:
     void GetValue(const NodeLib::Message& m);
-    void SetValue(const NodeLib::Message& m);
+    void SetValue(Value newValue);
     void SetValuePwm(const NodeLib::Message& m);
     void SetMode(const NodeLib::Message& m, const NodeLib::PinMode newMode);
     void QueueMessage(const NodeLib::Operation operation);

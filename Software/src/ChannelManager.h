@@ -15,7 +15,8 @@ class ChannelManager : public NodeLib::IVariableHandler
     void Init(NodeLib::Node& node);
     void Loop();
 
-    void ReceivedMessage(const NodeLib::Message& m);
+    void ReceivedMessage(const NodeLib::Message& m) override;
+    void ConnectionLost() override;
 
   private:
 };

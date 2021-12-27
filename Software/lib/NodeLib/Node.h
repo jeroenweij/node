@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <tools/DelayTimer.h>
+
+#include "ErrorHandler.h"
 #include "IVariableHandler.h"
 #include "id.h"
 
@@ -14,7 +17,7 @@ namespace NodeLib
     class Node
     {
       public:
-        Node(const int enablePin, const int ledPin);
+        Node(const int enablePin, const int ledPin, const int buttonPin = -1);
 
         void RegisterHandler(IVariableHandler* handler);
         void QueueMessage(const Message& m);
@@ -31,8 +34,10 @@ namespace NodeLib
         void         flushQueue();
         void         setEnable(bool enable);
         void         WriteMessage(const Message& m);
+        void         ResetHearthBeat();
         virtual void HandleMasterMessage(const Message& m) {}
 
+        ErrorHandler         errorHandler;
         static const int     queueSize    = 25;
         static const uint8_t masterNodeId = 0;
         static const int     nodeSpacing  = 150;
@@ -47,8 +52,9 @@ namespace NodeLib
         void HandleInternalMessage(const Message& m);
         bool FindFrameStart();
 
-        const int enablePin;
-        const int ledPin;
-        Message   messageQueue[queueSize];
+        const int  enablePin;
+        const int  ledPin;
+        Message    messageQueue[queueSize];
+        DelayTimer hearthBeatTimer;
     };
 } // namespace NodeLib

@@ -3,18 +3,17 @@
 *************************************************************/
 
 #pragma once
-
-#include "id.h"
-
-#include <stdint.h>
-
 namespace NodeLib
 {
-
-    class IVariableHandler
+    class ErrorHandler
     {
       public:
-        virtual void ReceivedMessage(const Message& message) = 0;
-        virtual void ConnectionLost()                        = 0;
+        ErrorHandler(const int ledPin, const int buttonPin = -1);
+
+        void Error(const bool recoverable) const;
+
+      private:
+        const int ledPin;
+        const int buttonPin;
     };
 } // namespace NodeLib

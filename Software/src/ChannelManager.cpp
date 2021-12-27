@@ -57,3 +57,11 @@ void ChannelManager::ReceivedMessage(const Message& m)
         channels[static_cast<int>(m.id.channel) - 1]->HandleCommand(m);
     }
 }
+
+void ChannelManager::ConnectionLost()
+{
+    for (Channel* c : channels)
+    {
+        c->DisableOutput();
+    }
+}

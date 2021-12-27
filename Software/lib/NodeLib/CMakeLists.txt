@@ -9,6 +9,8 @@ add_library(NodeLib
     EPinMode.h
     EOperation.h
     EChannelId.h
+    ErrorHandler.h
+    ErrorHandler.cpp
 )
 
 target_include_directories(NodeLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/..)

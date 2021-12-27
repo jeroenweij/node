@@ -15,19 +15,28 @@ using NodeLib::Message;
 using NodeLib::NodeMaster;
 using NodeLib::Operation;
 
-NodeMaster::NodeMaster(const int enablePin, const int ledPin) :
-    Node(enablePin, ledPin),
+NodeMaster::NodeMaster(const int enablePin, const int ledPin, const int buttonPin) :
+    Node(enablePin, ledPin, buttonPin),
     nodesFound(false)
 {
     nodeId = masterNodeId;
 }
 
-void NodeMaster::Init()
+void NodeMaster::Init(const uint8_t expectedNumNodes)
 {
     Node::Init();
 
-    delay(500);
-    DetectNodes();
+    bool nodesOk = false;
+    while (!nodesOk)
+    {
+        DetectNodes();
+        nodesOk = ActiveNodeCount() == expectedNumNodes;
+
+        if (!nodesOk)
+        {
+            errorHandler.Error(true);
+        }
+    }
 }
 
 void NodeMaster::Loop()
@@ -68,6 +77,19 @@ void NodeMaster::DetectNodes()
     LOG_INFO(F("Done Detecting Nodes"));
 }
 
+const uint8_t NodeMaster::ActiveNodeCount() const
+{
+    uint8_t nodeCount = 0;
+    for (const auto& nodeActive : activeNodes)
+    {
+        if (nodeActive)
+        {
+            nodeCount++;
+        }
+    }
+    return nodeCount;
+}
+
 void NodeMaster::PollNextNode(const int prevNodeId)
 {
     // Flush any queued messages
@@ -106,6 +128,7 @@ void NodeMaster::HandleInternalOperation(const Message& m)
         case Operation::ENDOFQ:
         {
             PollNextNode(m.id.node);
+            ResetHearthBeat();
             break;
         }
         default:

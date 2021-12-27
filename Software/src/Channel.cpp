@@ -39,7 +39,7 @@ void Channel::HandleCommand(const NodeLib::Message& m)
         }
         case Operation::SET:
         {
-            SetValue(m);
+            SetValue(m.value);
             break;
         }
         case Operation::SETPWM:
@@ -201,6 +201,14 @@ void Channel::Loop()
     forceUpdate = false;
 }
 
+void Channel::DisableOutput()
+{
+    if (mode == PinMode::DIGITAL_OUT)
+    {
+        SetValue(0);
+    }
+}
+
 void Channel::ServoWrite(int)
 {
     LOG_ERROR("Not a servo channel");
@@ -233,27 +241,25 @@ void Channel::GetValue(const Message& m)
     QueueMessage(Operation::VALUE, value);
 }
 
-void Channel::SetValue(const Message& m)
+void Channel::SetValue(Value newValue)
 {
     if (node == nullptr)
     {
         return;
     }
 
-    Value value = 0;
     switch (mode)
     {
         case PinMode::SERVO:
         {
-            currentValue = m.value;
-            value        = m.value;
-            ServoWrite(m.value);
+            currentValue = newValue;
+            ServoWrite(currentValue);
             break;
         }
         case PinMode::DIGITAL_OUT:
         {
-            currentValue = m.value > 0 ? 1 : 0;
-            value        = currentValue;
+            currentValue = newValue > 0 ? 1 : 0;
+            newValue     = currentValue;
             digitalWrite(pin, currentValue);
             break;
         }
@@ -262,7 +268,7 @@ void Channel::SetValue(const Message& m)
             return;
             break;
     }
-    QueueMessage(Operation::VALUE, value);
+    QueueMessage(Operation::VALUE, newValue);
 }
 
 void Channel::SetValuePwm(const Message& m)
