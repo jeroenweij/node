@@ -15,8 +15,8 @@ using NodeLib::Message;
 using NodeLib::NodeMaster;
 using NodeLib::Operation;
 
-NodeMaster::NodeMaster(const int enablePin, const int ledPin, const int buttonPin) :
-    Node(enablePin, ledPin, buttonPin),
+NodeMaster::NodeMaster(const int enablePin, const int ledPin, const int errorLedPin, const int buttonPin) :
+    Node(enablePin, ledPin, errorLedPin, buttonPin),
     nodesFound(false)
 {
     nodeId = masterNodeId;

@@ -14,7 +14,7 @@
 
 using NodeLib::Node;
 
-Node           node(PIN_ENABLE_485, PIN_LED);
+Node           node(PIN_ENABLE_485, PIN_LED, PIN_LED);
 ChannelManager manager;
 
 void setup(void)

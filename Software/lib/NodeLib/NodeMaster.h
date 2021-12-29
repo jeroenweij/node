@@ -12,7 +12,7 @@ namespace NodeLib
     class NodeMaster : public Node
     {
       public:
-        NodeMaster(const int enablePin, const int ledPin, const int buttonPin);
+        NodeMaster(const int enablePin, const int ledPin, const int errorLedPin, const int buttonPin);
 
         void Init(const uint8_t expectedNumNodes);
         void Loop();

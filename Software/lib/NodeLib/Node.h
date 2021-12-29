@@ -17,7 +17,7 @@ namespace NodeLib
     class Node
     {
       public:
-        Node(const int enablePin, const int ledPin, const int buttonPin = -1);
+        Node(const int enablePin, const int ledPin, const int errorLedPin, const int buttonPin = -1);
 
         void RegisterHandler(IVariableHandler* handler);
         void QueueMessage(const Message& m);
