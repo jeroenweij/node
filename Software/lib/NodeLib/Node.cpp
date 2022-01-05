@@ -18,7 +18,7 @@ using NodeLib::Operation;
 byte frameStart[2] = {0xFF, 0x42};
 
 Node::Node(const int enablePin, const int ledPin, const int errorLedPin, const int buttonPin) :
-    errorHandler(ledPin, buttonPin),
+    errorHandler(errorLedPin, buttonPin),
     handler(nullptr),
     nodeId(99),
     messagesQueued(0),
