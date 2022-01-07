@@ -17,13 +17,15 @@ using NodeLib::Node;
 Node           node(PIN_ENABLE_485, PIN_LED, PIN_LED);
 ChannelManager manager;
 
+uint8_t EEMEM address = 0x01;
+
 void setup(void)
 {
     Serial.begin(115200);
     pinMode(PIN_LED, OUTPUT);
     digitalWrite(PIN_LED, HIGH);
 
-    uint8_t nodeId = eeprom_read_byte((uint8_t*)0);
+    uint8_t nodeId = eeprom_read_byte((uint8_t*)&address);
     LOG_INFO("Node Id = " << nodeId);
     node.SetId(nodeId);
 
