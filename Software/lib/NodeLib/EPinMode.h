@@ -14,12 +14,16 @@ namespace NodeLib
         DIGITAL_OUT,
         ANALOG_IN,
         SERVO,
+        NOT_CONFIGURED,
     };
 
     inline std::stringstream& operator<<(std::stringstream& oStrStream, const PinMode pinmode)
     {
         switch (pinmode)
         {
+            case PinMode::NOT_CONFIGURED:
+                oStrStream << "NOT_CONFIGURED";
+                break;
             case PinMode::DIGITAL_IN:
                 oStrStream << "DIGITAL_IN";
                 break;

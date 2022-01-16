@@ -7,6 +7,7 @@
 #include "NodeLib/EPinMode.h"
 #include "NodeLib/Node.h"
 #include "NodeLib/id.h"
+#include "tools/DelayTimer.h"
 
 enum class ChannelType
 {
@@ -48,5 +49,5 @@ class Channel
     Value                    currentValue;
     NodeLib::Node*           node;
     bool                     forceUpdate;
-    unsigned long            nextUpdateTime;
+    DelayTimer               nextUpdateTime;
 };

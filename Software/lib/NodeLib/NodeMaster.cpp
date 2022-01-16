@@ -30,7 +30,7 @@ void NodeMaster::Init(const uint8_t expectedNumNodes)
     while (!nodesOk)
     {
         DetectNodes();
-        nodesOk = ActiveNodeCount() == expectedNumNodes;
+        nodesOk = ActiveNodeCount() >= expectedNumNodes;
 
         if (!nodesOk)
         {

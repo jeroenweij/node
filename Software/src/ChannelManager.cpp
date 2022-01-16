@@ -2,6 +2,7 @@
 * Created by J. Weij
 *************************************************************/
 
+#include <Arduino.h>
 #include <pins.h>
 
 #include "Channel.h"
@@ -60,6 +61,7 @@ void ChannelManager::ReceivedMessage(const Message& m)
 
 void ChannelManager::ConnectionLost()
 {
+    digitalWrite(PIN_LED, HIGH);
     for (Channel* c : channels)
     {
         c->DisableOutput();

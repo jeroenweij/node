@@ -20,11 +20,11 @@ Channel::Channel(const ChannelId channel, const int pin, const ChannelType type,
     channel(channel),
     type(type),
     pwm(pwm),
-    mode(PinMode::DIGITAL_IN),
+    mode(PinMode::NOT_CONFIGURED),
     currentValue(0),
     node(nullptr),
     forceUpdate(false),
-    nextUpdateTime(0)
+    nextUpdateTime()
 {
 }
 
@@ -140,63 +140,45 @@ void Channel::Init(Node& node)
 {
     this->node = &node;
 
-    switch (mode)
-    {
-        case PinMode::DIGITAL_IN:
-        {
-            pinMode(pin, INPUT_PULLUP);
-            break;
-        }
-        case PinMode::DIGITAL_OUT:
-        {
-            pinMode(pin, OUTPUT);
-            digitalWrite(pin, currentValue);
-            break;
-        }
-        case PinMode::ANALOG_IN:
-        {
-            pinMode(pin, INPUT);
-            break;
-        }
-        case PinMode::SERVO:
-        {
-            break;
-        }
-    }
+    pinMode(pin, INPUT);
+    mode = PinMode::NOT_CONFIGURED;
 }
 
 void Channel::Loop()
 {
-    if (millis() > nextUpdateTime || forceUpdate)
+    switch (mode)
     {
-        switch (mode)
+        case PinMode::ANALOG_IN:
         {
-            case PinMode::ANALOG_IN:
+            if (!nextUpdateTime.isRunning() || nextUpdateTime.Finished())
             {
                 Value value = analogRead(pin);
                 if (value != currentValue || forceUpdate)
                 {
                     currentValue = value;
                     QueueMessage(Operation::VALUE, value);
-                    nextUpdateTime = millis() + debounceTime;
+                    nextUpdateTime.Start(debounceTime);
                 }
-                break;
             }
-            case PinMode::DIGITAL_IN:
+            break;
+        }
+        case PinMode::DIGITAL_IN:
+        {
+            if (!nextUpdateTime.isRunning() || nextUpdateTime.Finished())
             {
                 Value value = (digitalRead(pin) == LOW) ? 1 : 0;
                 if (value != currentValue || forceUpdate)
                 {
                     currentValue = value;
                     QueueMessage(Operation::VALUE, value);
-                    nextUpdateTime = millis() + debounceTime;
+                    nextUpdateTime.Start(debounceTime);
                 }
-                break;
             }
-            default:
-                // Do nothing
-                break;
+            break;
         }
+        default:
+            // Do nothing
+            break;
     }
     forceUpdate = false;
 }
