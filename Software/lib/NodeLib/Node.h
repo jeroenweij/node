@@ -40,7 +40,7 @@ namespace NodeLib
         ErrorHandler         errorHandler;
         static const int     queueSize    = 25;
         static const uint8_t masterNodeId = 0;
-        static const int     nodeSpacing  = 150;
+        static const int     nodeSpacing  = 100;
 
         IVariableHandler* handler;
         uint8_t           nodeId;

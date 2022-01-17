@@ -45,7 +45,7 @@ void Node::Init()
     pinMode(ledPin, OUTPUT);
     digitalWrite(enablePin, LOW);
 
-    Serial1.begin(19200);
+    Serial1.begin(115200);
 }
 
 void Node::Loop()
