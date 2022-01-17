@@ -69,7 +69,7 @@ void NodeMaster::DetectNodes()
     setEnable(false);
 
     DelayTimer timeout(nodeSpacing * (numNodes + 1));
-    while (timeout.isRunning() && !timeout.Finished())
+    while (timeout.IsRunning() && !timeout.Finished())
     {
         Node::Loop();
     }

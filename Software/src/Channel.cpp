@@ -150,7 +150,7 @@ void Channel::Loop()
     {
         case PinMode::ANALOG_IN:
         {
-            if (!nextUpdateTime.isRunning() || nextUpdateTime.Finished())
+            if (!nextUpdateTime.IsRunning() || nextUpdateTime.Finished())
             {
                 Value value = analogRead(pin);
                 if (value != currentValue || forceUpdate)
@@ -164,7 +164,7 @@ void Channel::Loop()
         }
         case PinMode::DIGITAL_IN:
         {
-            if (!nextUpdateTime.isRunning() || nextUpdateTime.Finished())
+            if (!nextUpdateTime.IsRunning() || nextUpdateTime.Finished())
             {
                 Value value = (digitalRead(pin) == LOW) ? 1 : 0;
                 if (value != currentValue || forceUpdate)

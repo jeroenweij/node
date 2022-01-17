@@ -69,7 +69,7 @@ bool Node::FindFrameStart()
     int        findByte = 0;
     DelayTimer timeout(100);
 
-    while (timeout.isRunning() && !timeout.Finished())
+    while (timeout.IsRunning() && !timeout.Finished())
     {
         uint8_t b = Serial1.read();
         if (b == frameStart[findByte])
