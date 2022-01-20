@@ -30,7 +30,7 @@ namespace NodeLib
         void Loop();
 
       protected:
-        bool         ReadMessage();
+        bool         ReadMessage(Message& m);
         void         flushQueue();
         void         setEnable(bool enable);
         void         WriteMessage(const Message& m);
@@ -50,7 +50,6 @@ namespace NodeLib
         void HandlePollRequest();
         void HandleMessage(const Message& m);
         void HandleInternalMessage(const Message& m);
-        bool FindFrameStart();
 
         const int  enablePin;
         const int  ledPin;

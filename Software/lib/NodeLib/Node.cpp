@@ -15,7 +15,7 @@ using NodeLib::Node;
 using NodeLib::numNodes;
 using NodeLib::Operation;
 
-byte frameStart[2] = {0xFF, 0x42};
+uint8_t frameStart[2] = {0xEE, 0x42};
 
 Node::Node(const int enablePin, const int ledPin, const int errorLedPin, const int buttonPin) :
     errorHandler(errorLedPin, buttonPin),
@@ -50,11 +50,40 @@ void Node::Init()
 
 void Node::Loop()
 {
+    struct Frame
+    {
+        uint8_t start[sizeof(frameStart)];
+        Message message;
+    };
+
+    static uint8_t buffer[sizeof(Frame)] = {0};
+    static int     atByte                = 0;
+    static Frame*  frame                 = (Frame*)buffer;
+
     while (Serial1.available())
     {
-        if (FindFrameStart())
+        buffer[atByte] = Serial1.read();
+
+        if (atByte < sizeof(frameStart))
         {
-            ReadMessage();
+            if (frame->start[atByte] == frameStart[atByte])
+            {
+                atByte++;
+            }
+            else
+            {
+                atByte = 0;
+            }
+        }
+        else
+        {
+            atByte++;
+        }
+
+        if (atByte >= sizeof(buffer))
+        {
+            ReadMessage(frame->message);
+            atByte = 0;
         }
     }
 
@@ -64,57 +93,13 @@ void Node::Loop()
     }
 }
 
-bool Node::FindFrameStart()
-{
-    int        findByte = 0;
-    DelayTimer timeout(100);
-
-    while (timeout.IsRunning() && !timeout.Finished())
-    {
-        uint8_t b = Serial1.read();
-        if (b == frameStart[findByte])
-        {
-            findByte++;
-            if (findByte == sizeof(frameStart))
-            {
-                return true;
-            }
-        }
-        else
-        {
-            if (findByte > 0 && b == frameStart[0])
-            {
-                findByte = 1;
-            }
-            else
-            {
-                if (b == -1)
-                {
-                    return false;
-                }
-                findByte = 0;
-            }
-        }
-    }
-    return false;
-}
-
 void Node::ResetHearthBeat()
 {
     hearthBeatTimer.Start(500);
 }
 
-bool Node::ReadMessage()
+bool Node::ReadMessage(Message& m)
 {
-    Message m;
-    size_t  bytes = Serial1.readBytes((uint8_t*)&m, sizeof(m));
-
-    if (bytes != sizeof(m))
-    {
-        LOG_ERROR("Invalid length");
-        return false;
-    }
-
     LOG_DEBUG("READ  Node: " << m.id.node << " Chan: " << m.id.channel << " Op: " << m.id.operation << " V: " << m.value);
 
     if (nodeId != masterNodeId)
@@ -180,8 +165,11 @@ void Node::flushQueue()
     {
         WriteMessage(messageQueue[i]);
 
-        // Limit rate so reader can keep up
-        delay(5);
+        if ((i + 1 < messagesQueued) && (i % 5 == 0))
+        {
+            // Limit rate so reader can keep up
+            delay(5);
+        }
     }
     messagesQueued = 0;
 
