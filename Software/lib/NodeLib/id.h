@@ -49,6 +49,13 @@ namespace NodeLib
         }
     };
 
+    inline std::stringstream& operator<<(std::stringstream& oStrStream, const NodeLib::Id id)
+    {
+        oStrStream << " Node: " << id.node << " Channel: " << id.channel << " Operation: " << id.operation;
+
+        return oStrStream;
+    }
+
     struct __attribute__((packed)) Message
     {
         Id    id;
@@ -78,4 +85,11 @@ namespace NodeLib
         {
         }
     };
+
+    inline std::stringstream& operator<<(std::stringstream& oStrStream, const NodeLib::Message m)
+    {
+        oStrStream << m.id << " Value: " << m.value;
+
+        return oStrStream;
+    }
 } // namespace NodeLib
