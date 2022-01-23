@@ -17,7 +17,7 @@ using NodeLib::Node;
 Node           node(PIN_ENABLE_485, PIN_LED, PIN_LED);
 ChannelManager manager;
 
-uint8_t EEMEM address = 0x01;
+uint8_t EEMEM address = NODE_ID;
 
 void setup(void)
 {

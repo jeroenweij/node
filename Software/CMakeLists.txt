@@ -4,7 +4,9 @@ include(tools/cmake/arduino.cmake)
 cmake_minimum_required(VERSION 2.8)
 
 project(Node C CXX)
-#add_compile_definitions(DEBUG)
+
+set(NODE_ID 1 CACHE STRING "Node id")
+add_definitions(-DNODE_ID=${NODE_ID})
 
 add_subdirectory(tools)
 add_subdirectory(lib)
